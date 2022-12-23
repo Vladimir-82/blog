@@ -23,6 +23,18 @@ class MainListView(ListView):
         context['post'] = Post.objects.all()
         return context
 
+class CategoryListView(ListView):
+    template_name = 'category.html'
+    context_object_name = 'post'
+
+    def get_queryset(self):
+        return Post.objects.filter(category=self.kwargs['category'])
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categories'] = Category.objects.all()
+        context['post'] = Post.objects.filter(category=self.kwargs['category'])
+        return context
 
 
 def register(request):
