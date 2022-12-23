@@ -8,10 +8,23 @@
                     {{ pos.author }}
                 </li>
                 <li class="nav-item">
+                    {{ pos.created_at }}
+                </li>
+
+                <li class="nav-item">
                     {{ pos.category }}
                 </li>
+
+                <li class="nav-item">
+                    <img src="{{ pos.photo.url }}" alt="connect"><br>
+                </li>
+
                 <li class="nav-item">
                     {{ pos.body }}
+                </li>
+
+                <li class="nav-item">
+                    Views: {{ pos.views }} Likes: {{ pos.likes }} Dislikes: {{ pos.dislikes }}
                 </li>
             {% endfor %}
         {% else %}
