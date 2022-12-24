@@ -19,7 +19,7 @@ class MainListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['categories'] = Category.objects.all()
+        # context['categories'] = Category.objects.all()
         context['post'] = Post.objects.all()
         return context
 
@@ -35,7 +35,7 @@ class CategoryListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['categories'] = Category.objects.all()
+        # context['categories'] = Category.objects.all()
         context['post'] = Post.objects.filter(
             category_id=self.kwargs['category_id']).select_related('category')
         return context
