@@ -1,34 +1,25 @@
 {% extends "basic.html" %}
 {% block title %}main{% endblock %}
 {% block content %}
-    <div>
         {% if post %}
             {% for pos in post %}
-                <li class="nav-item">
-                    {{ pos.author }}
-                </li>
-                <li class="nav-item">
-                    {{ pos.created_at }}
-                </li>
-
-                <li class="nav-item">
-                    {{ pos.category }}
-                </li>
-
-                <li class="nav-item">
-                    <img src="{{ pos.photo.url }}" alt="connect"><br>
-                </li>
-
-                <li class="nav-item">
-                    {{ pos.body }}
-                </li>
-
-                <li class="nav-item">
-                    Views: {{ pos.views }} Likes: {{ pos.likes }} Dislikes: {{ pos.dislikes }}
-                </li>
+                <div class="card-body">
+                    <div class="media">
+                        <div class="p-3 border bg-light">
+                            <h5 class="card-title">{{ pos.title }}</h5>
+                            <h5 class="card-title">{{ pos.author }}</h5>
+                            <h5 class="card-title">{{ pos.created_at }}</h5>
+                            {% if pos.photo %}
+                                <img src="{{ pos.photo.url }}" alt="" width="350" class="mr-3">
+                            {% else %}
+                                <img src="https://picsum.photos/id/1060/350/235/?blur=2" alt="" class="mr-3">
+                            {% endif %}
+                            <h5 class="card-title">Views: {{ pos.views }} Likes: {{ pos.likes }} Dislikes: {{ pos.dislikes }}</h5>
+                        </div>
             {% endfor %}
         {% else %}
-            No posts
+            <h5 class="card-title">No posts</h5>
         {% endif %}
+    </div>
     </div>
 {% endblock %}
