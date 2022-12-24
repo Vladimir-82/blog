@@ -37,7 +37,7 @@
             {% if categories %}
                 {% for cat in categories %}
                     <li class="nav-item">
-                        <a href="{% url 'category' category.pk %}"> {{ cat.title }} </a>
+                        <a href="{% url 'category' cat.pk %}"> {{ cat.title }} </a>
                     </li>
                 {% endfor %}
             {% else %}
