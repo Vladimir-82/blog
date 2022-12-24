@@ -35,9 +35,10 @@
       <div class="position-sticky pt-3 sidebar-sticky">
         <ul class="nav flex-column">
             {% if categories %}
+                <a href="{% url  'main' %}" style="text-decoration: none"> All </a>
                 {% for cat in categories %}
                     <li class="nav-item">
-                        <a href="{% url 'category' cat.pk %}"> {{ cat.title }} </a>
+                        <a href="{% url 'category' cat.pk %}" style="text-decoration: none"> {{ cat.title }} </a>
                     </li>
                 {% endfor %}
             {% else %}
