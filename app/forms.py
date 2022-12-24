@@ -8,13 +8,13 @@ from .models import Post
 
 class UserLoginForm(AuthenticationForm):
     username = forms.CharField(
-        label='Имя пользователя',
+        label='Name',
         widget=forms.TextInput(attrs={'class': 'form-control',
                                       'style': 'width:50ch'
                                       })
     )
     password = forms.CharField(
-        label='Пароль',
+        label='Password',
         widget=forms.PasswordInput(attrs={'class': 'form-control',
                                           'style': 'width:50ch'
                                           })
@@ -22,20 +22,20 @@ class UserLoginForm(AuthenticationForm):
 
 
 class UserRegisterForm(UserCreationForm):
-    username = forms.CharField(label='Имя пользователя',
-                               help_text='Максимум 150 символов',
+    username = forms.CharField(label='Name',
+                               help_text='Maximum 150 characters',
                                widget=forms.TextInput(
                                    attrs={'class': 'form-control',
                                           'style': 'width:50ch'
                                           })
                                )
-    password1 = forms.CharField(label='Пароль',
+    password1 = forms.CharField(label='Password',
                                 widget=forms.PasswordInput(
                                     attrs={'class': 'form-control',
                                            'style': 'width:50ch'
                                            })
                                 )
-    password2 = forms.CharField(label='Подтверждение пароля',
+    password2 = forms.CharField(label='Password confirmation',
                                 widget=forms.PasswordInput(
                                     attrs={'class': 'form-control',
                                            'style': 'width:50ch'
