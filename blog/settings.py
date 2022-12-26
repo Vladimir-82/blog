@@ -74,7 +74,7 @@ WSGI_APPLICATION = 'blog.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
-PSQL = True
+PSQL = False
 
 if PSQL:
     DATABASES = {

@@ -35,6 +35,7 @@
         <ul class="nav flex-column">
             {% get_list_categories as categories %}
             {% if categories %}
+                <h4>Categories</h4>
                 <h4><a href="{% url  'main' %}" style="text-decoration: none"> All </a></h4>
                 {% for cat in categories %}
                     <li class="nav-item">

@@ -1,12 +1,14 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import login, logout
-from .forms import UserRegisterForm, UserLoginForm
+from django.urls import reverse_lazy
+from django.views.generic import ListView, DetailView, CreateView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from .forms import UserRegisterForm, UserLoginForm, PostForm
 from .utils import *
 
 
 
-from django.views.generic.list import ListView
 from .models import Post, Category
 
 
@@ -39,6 +41,13 @@ class CategoryListView(ListView):
         context['post'] = Post.objects.filter(
             category_id=self.kwargs['category_id']).select_related('category')
         return context
+
+
+class CreatePost(LoginRequiredMixin, CreateView):
+    form_class = PostForm
+    template_name = 'create.html'
+    success_url = reverse_lazy('main')
+    login_url = '/login/'
 
 
 
