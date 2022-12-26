@@ -14,12 +14,13 @@
                             {% else %}
                                 <img src="https://picsum.photos/id/1060/350/235/?blur=2" alt="" class="mr-3">
                             {% endif %}
-                            <h5 class="card-title">Views: {{ pos.views }} Likes: {{ pos.likes }} Dislikes: {{ pos.dislikes }}</h5>
+                                <h5 class="card-title">Views: {{ pos.views }} Likes: {{ pos.likes }} Dislikes: {{ pos.dislikes }}</h5>
                         </div>
             {% endfor %}
         {% else %}
             <h5 class="card-title">No posts</h5>
         {% endif %}
-    </div>
-    </div>
+                    </div>
+                </div>
+        <a class="btn btn-outline-primary" href="{% url  'create' %}">Add new post</a>
 {% endblock %}

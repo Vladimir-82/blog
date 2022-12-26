@@ -55,9 +55,12 @@ class UserRegisterForm(UserCreationForm):
 class PostForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ['title', 'category', 'body']
+        fields = ['category', 'title', 'photo', 'body']
         widgets = {
-            'title': forms.TextInput(attrs={'class': 'form-control'}),
-            'body': forms.Textarea(attrs={'class': 'form-control', 'rows': 5}),
-            'category': forms.Select(attrs={'class': 'form-control'}),
+            'title': forms.TextInput(attrs={'class': 'form-control',
+                                            'style': 'width:50ch'}),
+            'body': forms.Textarea(attrs={'class': 'form-control', 'rows': 5,
+                                          'style': 'width:50ch'}),
+            'category': forms.Select(attrs={'class': 'form-control',
+                                            'style': 'width:50ch'}),
         }
