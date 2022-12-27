@@ -54,6 +54,12 @@ class CreatePost(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
+class ViewPost(DetailView):
+    model = Post
+    context_object_name = 'post_item'
+    template_name = 'post_detail.html'
+
+
 
 
 def register(request):
