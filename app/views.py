@@ -4,7 +4,7 @@ from django.contrib.auth import login, logout
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .forms import UserRegisterForm, UserLoginForm, PostForm
+from .forms import UserRegisterForm, UserLoginForm, PostForm, CommentForm
 from .utils import *
 
 
@@ -55,6 +55,7 @@ class CreatePost(LoginRequiredMixin, CreateView):
 
 
 class ViewPost(DetailView):
+    form_class = CommentForm
     model = Post
     context_object_name = 'post_item'
     template_name = 'post_detail.html'

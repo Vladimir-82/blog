@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 
-from .models import Post
+from .models import Post, Comment
 
 
 
@@ -63,4 +63,14 @@ class PostForm(forms.ModelForm):
                                           'style': 'width:50ch'}),
             'category': forms.Select(attrs={'class': 'form-control',
                                             'style': 'width:50ch'}),
+        }
+
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ('body',)
+        widgets = {
+            'body': forms.Textarea(attrs={'class': 'form-control', 'rows': 5,
+                                          'style': 'width:50ch'}),
         }
