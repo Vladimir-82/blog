@@ -1,15 +1,17 @@
+from django.http import HttpResponseForbidden
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import login, logout
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView, CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic.edit import FormMixin
 from .forms import UserRegisterForm, UserLoginForm, PostForm, CommentForm
 from .utils import *
 
 
 
-from .models import Post, Category
+from .models import Post, Category, Comment
 
 
 class MainListView(ListView):
@@ -21,7 +23,6 @@ class MainListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # context['categories'] = Category.objects.all()
         context['post'] = Post.objects.all()
         return context
 
@@ -37,7 +38,6 @@ class CategoryListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # context['categories'] = Category.objects.all()
         context['post'] = Post.objects.filter(
             category_id=self.kwargs['category_id']).select_related('category')
         return context
@@ -54,11 +54,34 @@ class CreatePost(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-class ViewPost(DetailView):
+class ViewPost(FormMixin, DetailView):
     form_class = CommentForm
     model = Post
     context_object_name = 'post_item'
     template_name = 'post_detail.html'
+
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['comments'] = Comment.objects.all()
+        return context
+
+    def post(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return HttpResponseForbidden()
+        self.object = self.get_object()
+        p = Comment.objects.all()
+
+        form = self.get_form()
+        if form.is_valid():
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+
+    def form_valid(self, form):
+        # Here, we would record the user's interest using the message
+        # passed in form.cleaned_data['message']
+        return super().form_valid(form)
 
 
 
