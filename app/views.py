@@ -59,7 +59,7 @@ class ViewPost(FormMixin, DetailView):
     model = Post
     context_object_name = 'post_item'
     template_name = 'post_detail.html'
-
+    success_url = reverse_lazy('main')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -70,7 +70,8 @@ class ViewPost(FormMixin, DetailView):
         if not request.user.is_authenticated:
             return HttpResponseForbidden()
         self.object = self.get_object()
-        p = Comment.objects.all()
+        comment = request.POST['body']
+        Comment.objects.create(body=comment)
 
         form = self.get_form()
         if form.is_valid():
@@ -79,8 +80,7 @@ class ViewPost(FormMixin, DetailView):
             return self.form_invalid(form)
 
     def form_valid(self, form):
-        # Here, we would record the user's interest using the message
-        # passed in form.cleaned_data['message']
+        form.instance.name = self.request.user
         return super().form_valid(form)
 
 

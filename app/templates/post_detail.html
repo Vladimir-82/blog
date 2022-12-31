@@ -34,12 +34,13 @@
     {% endif %}
 
 
-
-    <form action="{% url 'view_news' post_item.pk %}" method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-primary btn-block">Add comment</button>
-    </form>
+    <div class="inner">
+        <form action="{% url 'view_news' post_item.pk %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary btn-block">Add comment</button>
+        </form>
+    </div>
 
 
 </div>
