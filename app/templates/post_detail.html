@@ -23,11 +23,37 @@
 
 
     {% if comments %}
+        <h1 class="comments-title">Comments (...)</h1>
         {% for comment in comments %}
-            <h5 class="card-title">{{ comment.name }}</h5>
-            <h5 class="card-title">{{ comment.email }}</h5>
-            <h5 class="card-title">{{ comment.body }}</h5>
-            <h5 class="card-title">{{ comment.created_on }}</h5>
+            <div class="card-body">
+                    <div class="media">
+                        <div class="p-3 border bg-light">
+
+
+                            <div class="container">
+                                <div class="be-comment-block">
+                                    <div class="be-comment">
+                                        <div class="be-comment-content">
+                                            <span class="be-comment-name">
+                                                {{ comment.name }} {{ comment.email }}
+                                            </span>
+                                            <span class="be-comment-time">
+                                                {{ comment.created_on }}
+                                            </span>
+                                            <p class="be-comment-text">
+                                                {{ comment.body }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
+                        </div>
+                    </div>
+            </div>
         {% endfor %}
     {% else %}
         No comments
