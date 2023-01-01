@@ -59,29 +59,33 @@ class ViewPost(FormMixin, DetailView):
     model = Post
     context_object_name = 'post_item'
     template_name = 'post_detail.html'
-    success_url = reverse_lazy('main')
+
+
+    def get_success_url(self):
+        pk = self.kwargs["pk"]
+        return reverse('view_news', kwargs={"pk": pk})
+
 
     def get_context_data(self, **kwargs):
+        self.object = self.get_object()
         context = super().get_context_data(**kwargs)
-        context['comments'] = Comment.objects.all()
+        context['comments'] = Comment.objects.filter(post=self.object)
         return context
 
     def post(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
             return HttpResponseForbidden()
         self.object = self.get_object()
+        name = request.user
         comment = request.POST['body']
-        Comment.objects.create(body=comment)
-
+        Comment.objects.create(post=self.object, name=name,
+                               email=name.email, body=comment
+                               )
         form = self.get_form()
         if form.is_valid():
             return self.form_valid(form)
         else:
             return self.form_invalid(form)
-
-    def form_valid(self, form):
-        form.instance.name = self.request.user
-        return super().form_valid(form)
 
 
 
