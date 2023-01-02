@@ -5,15 +5,14 @@
     <div class="card-header">
         Category: {{ post_item.category }}
     </div>
+    <h5 class="card-title">{{ post_item.title }}</h5>
     <div class="card-body">
         {% if post_item.photo %}
             <img src="{{ post_item.photo.url }}" alt="" width="650" class="float-left mr-3">
         {% else %}
         <img src="https://picsum.photos/id/1060/650/235/?blur=2" alt="" class="float-left mr-3">
         {% endif %}
-
-        <h5 class="card-title">{{ post_item.title }}</h5>
-        <p class="card-text">{{ post_item.body|safe|linebreaks }}</p>
+        <p class="card-text" style="text-align: left">{{ post_item.body }}</p>
     </div>
     <h5 class="card-title">Views: {{ post_item.views }} Likes: {{ post_item.likes }} Dislikes: {{ post_item.dislikes }}</h5>
     <div class="card-footer text-muted">
@@ -23,7 +22,7 @@
 
 
     {% if comments %}
-        <h1 class="comments-title">Comments (...)</h1>
+        <h1 class="comments-title">Comments ({{ count_comments }})</h1>
         {% for comment in comments %}
             <div class="card-body">
                     <div class="media">
@@ -35,12 +34,12 @@
                                     <div class="be-comment">
                                         <div class="be-comment-content">
                                             <span class="be-comment-name">
-                                                {{ comment.name }} {{ comment.email }}
+                                                User: {{ comment.name }} Email: {{ comment.email }}
                                             </span>
                                             <span class="be-comment-time">
                                                 {{ comment.created_on }}
                                             </span>
-                                            <p class="be-comment-text">
+                                            <p class="be-comment-text" style="text-align: left">
                                                 {{ comment.body }}
                                             </p>
                                         </div>

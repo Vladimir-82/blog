@@ -70,8 +70,13 @@ class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = ('body',)
+        labels = {
+            'body': 'Your comment:',
+        }
         widgets = {
             'body': forms.Textarea(attrs={'class': 'form-control',
                                                   'rows': 5,
-                                                  'style': 'width:50ch'}),
+                                                  'style': 'width:50ch',
+                                          }
+                                   ),
         }

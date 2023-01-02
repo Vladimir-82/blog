@@ -69,7 +69,9 @@ class ViewPost(FormMixin, DetailView):
     def get_context_data(self, **kwargs):
         self.object = self.get_object()
         context = super().get_context_data(**kwargs)
-        context['comments'] = Comment.objects.filter(post=self.object)
+        queryset = Comment.objects.filter(post=self.object)
+        context['comments'] = queryset
+        context['count_comments'] = queryset.count()
         return context
 
     def post(self, request, *args, **kwargs):

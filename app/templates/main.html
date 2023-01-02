@@ -7,7 +7,7 @@
                     <div class="media">
                         <div class="p-3 border bg-light">
                             <h5 class="card-title">{{ pos.title }}</h5>
-                            <h5 class="card-title">{{ pos.author }}</h5>
+                            <h5 class="card-title">From: {{ pos.author }}</h5>
                             <h5 class="card-title">{{ pos.created_at }}</h5>
                                 <a href="{% url 'view_news' pos.pk %}" style="text-decoration: none">
                                 {% if pos.photo %}
