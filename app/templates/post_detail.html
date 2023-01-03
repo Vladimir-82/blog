@@ -6,29 +6,31 @@
         Category: {{ post_item.category }}
     </div>
     <h5 class="card-title">{{ post_item.title }}</h5>
+    <h5 class="card-title">From: {{ post_item.author }}</h5>
     <div class="card-body">
         {% if post_item.photo %}
             <img src="{{ post_item.photo.url }}" alt="" width="650" class="float-left mr-3">
         {% else %}
-        <img src="https://picsum.photos/id/1060/650/235/?blur=2" alt="" class="float-left mr-3">
+            <img src="https://picsum.photos/id/1060/650/235/?blur=2" alt="" class="float-left mr-3">
         {% endif %}
-        <p class="card-text" style="text-align: left">{{ post_item.body }}</p>
+        <div class="card-body">
+            <div class="media">
+                <div class="p-3 border bg-light">
+                    <p class="card-text" style="text-align: left">{{ post_item.body }}</p>
+                </div>
+            </div>
+        </div>
     </div>
     <h5 class="card-title">Views: {{ post_item.views }} Likes: {{ post_item.likes }} Dislikes: {{ post_item.dislikes }}</h5>
     <div class="card-footer text-muted">
         {{ post_item.created_at }}
     </div>
-
-
-
     {% if comments %}
         <h1 class="comments-title">Comments ({{ count_comments }})</h1>
         {% for comment in comments %}
             <div class="card-body">
                     <div class="media">
                         <div class="p-3 border bg-light">
-
-
                             <div class="container">
                                 <div class="be-comment-block">
                                     <div class="be-comment">
@@ -46,10 +48,6 @@
                                     </div>
                                 </div>
                             </div>
-
-
-
-
                         </div>
                     </div>
             </div>
@@ -57,8 +55,6 @@
     {% else %}
         No comments
     {% endif %}
-
-
     <div class="inner">
         <form action="{% url 'view_news' post_item.pk %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
@@ -66,9 +62,5 @@
             <button type="submit" class="btn btn-primary btn-block">Add comment</button>
         </form>
     </div>
-
-
 </div>
-
-
 {% endblock %}
