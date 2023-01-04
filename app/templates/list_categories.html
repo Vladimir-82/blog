@@ -1,0 +1,18 @@
+<nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+  <div class="position-sticky pt-3 sidebar-sticky">
+    <ul class="nav flex-column">
+        {% if categories %}
+            <h4>Categories</h4>
+            <h4><a href="{% url  'main' %}" style="text-decoration: none"> All </a></h4>
+            {% for cat in categories %}
+                <li class="nav-item">
+                    <h5><a href="{% url 'category' cat.pk %}" style="text-decoration: none"> {{ cat.title }} ({{ cat.cnt }})</a></h5>
+                </li>
+            {% endfor %}
+            <h3><a href="{% url  'create' %}" style="text-decoration: none; color: firebrick;"> Add new post </a></h3>
+        {% else %}
+            No categories
+        {% endif %}
+    </ul>
+  </div>
+</nav>
