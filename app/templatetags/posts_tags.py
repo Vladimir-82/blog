@@ -1,15 +1,12 @@
 from django import template
+from django.db.models import Count
+
 from app.models import Category
 
 register = template.Library()
 
 
-@register.simple_tag(name='get_list_categories')
-def get_categories():
-    return Category.objects.all()
-
-
-@register.inclusion_tag('basic.html')
+@register.inclusion_tag('list_categories.html')
 def show_categories():
-    categories = Category.objects.all()
-    return {"categories": categories}
+    categories = Category.objects.annotate(cnt=Count('post'))
+    return {'categories': categories}
