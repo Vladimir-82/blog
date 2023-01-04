@@ -3,7 +3,8 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import login, logout
 from django.urls import reverse_lazy, reverse
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import ListView, DetailView, CreateView, DeleteView, \
+    UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.edit import FormMixin
 from .forms import UserRegisterForm, UserLoginForm, PostForm, CommentForm
@@ -52,6 +53,22 @@ class CreatePost(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super().form_valid(form)
+
+
+class UpdatePost(UpdateView):
+    model = Post
+    form_class = PostForm
+    template_name = 'update.html'
+
+    def get_success_url(self):
+        pk = self.kwargs["pk"]
+        return reverse('view_news', kwargs={"pk": pk})
+
+
+class DeletePost(DeleteView):
+    model = Post
+    success_url = reverse_lazy('main')
+    template_name = 'delete.html'
 
 
 class ViewPost(FormMixin, DetailView):

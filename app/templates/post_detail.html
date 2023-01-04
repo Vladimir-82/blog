@@ -25,6 +25,10 @@
     <div class="card-footer text-muted">
         {{ post_item.created_at }}
     </div>
+    <div class="main_buttons">
+        <a class="btn btn-outline-primary" style="float: left; margin-left: 20%" href="{% url  'update' post_item.pk %}">Update</a>
+        <a class="btn btn-outline-danger" style="float: right; margin-right: 20%" href="{% url  'delete' post_item.pk %}">Delete</a>
+    </div>
     {% if comments %}
         <h1 class="comments-title">Comments ({{ count_comments }})</h1>
         {% for comment in comments %}

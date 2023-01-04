@@ -5,6 +5,8 @@ from .views import *
 urlpatterns = [
     path('', MainListView.as_view(), name='main'),
     path('create', CreatePost.as_view(), name='create'),
+    path('post/<int:pk>/update', UpdatePost.as_view(), name='update'),
+    path('post/<int:pk>/delete', DeletePost.as_view(), name='delete'),
     path('category/<int:category_id>/',
          CategoryListView.as_view(), name='category'),
     path('post/<int:pk>/', ViewPost.as_view(), name='view_news'),
