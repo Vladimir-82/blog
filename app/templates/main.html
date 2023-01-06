@@ -22,7 +22,8 @@
         {% else %}
             <h5 class="card-title">No posts</h5>
         {% endif %}
+            <a class="btn btn-outline-primary" style="margin-top: 10px" href="{% url  'create' %}">Add new post</a>
                     </div>
                 </div>
-        <a class="btn btn-outline-primary" href="{% url  'create' %}">Add new post</a>
+
 {% endblock %}
