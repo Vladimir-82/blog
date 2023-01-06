@@ -5,9 +5,7 @@
             <h4>Categories</h4>
             <h4><a href="{% url  'main' %}" style="text-decoration: none"> All </a></h4>
             {% for cat in categories %}
-                <li class="nav-item">
-                    <h5><a href="{% url 'category' cat.pk %}" style="text-decoration: none"> {{ cat.title }} ({{ cat.cnt }})</a></h5>
-                </li>
+                    <h5><a href="{% url 'category' cat.pk %}" style="text-decoration: none"> {{ cat.title }} <span class="badge bg-primary" >{{ cat.cnt }}</span></a></h5>
             {% endfor %}
             <h3><a href="{% url  'create' %}" style="text-decoration: none; color: firebrick;"> Add new post </a></h3>
         {% else %}

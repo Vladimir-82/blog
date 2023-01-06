@@ -30,7 +30,7 @@
         <a class="btn btn-outline-danger" style="float: right; margin-right: 20%" href="{% url  'delete' post_item.pk %}">Delete</a>
     </div>
     {% if comments %}
-        <h1 class="comments-title">Comments ({{ count_comments }})</h1>
+        <h1 class="comments-title">Comments <span class="badge bg-secondary">{{ count_comments }}</span></h1>
         {% for comment in comments %}
             <div class="card-body">
                     <div class="media">
