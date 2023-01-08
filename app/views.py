@@ -72,7 +72,7 @@ class UpdateComment(UpdateView):
 
     def get_success_url(self):
         pk = self.kwargs["pk"]
-        current_post = Post.objects.get(id=self.kwargs["pk"])
+        current_post = Post.objects.get(comment__id=pk)
         return reverse('view_news', kwargs={"pk": current_post.pk})
 
 
