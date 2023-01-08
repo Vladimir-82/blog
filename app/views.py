@@ -56,6 +56,27 @@ class CreatePost(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
+
+
+class UpdateComment(UpdateView):
+    model = Comment
+    form_class = CommentForm
+    template_name = 'update_comment.html'
+    # queryset = Post
+
+    def get_object(self, *args, **kwargs):
+        obj = super().get_object(*args, **kwargs)
+        if obj.name != self.request.user:
+            raise PermissionDenied()
+        return obj
+
+    def get_success_url(self):
+        pk = self.kwargs["pk"]
+        current_post = Post.objects.get(id=self.kwargs["pk"])
+        return reverse('view_news', kwargs={"pk": current_post.pk})
+
+
+
 class UpdatePost(UpdateView):
     model = Post
     form_class = PostForm
