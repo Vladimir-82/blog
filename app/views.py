@@ -1,7 +1,8 @@
-from django.http import HttpResponseForbidden
+from django.core.exceptions import PermissionDenied
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import login, logout
+
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView, CreateView, DeleteView, \
     UpdateView
@@ -60,6 +61,12 @@ class UpdatePost(UpdateView):
     form_class = PostForm
     template_name = 'update.html'
 
+    def get_object(self, *args, **kwargs):
+        obj = super().get_object(*args, **kwargs)
+        if obj.author != self.request.user:
+            raise PermissionDenied()
+        return obj
+
     def get_success_url(self):
         pk = self.kwargs["pk"]
         return reverse('view_news', kwargs={"pk": pk})
@@ -69,6 +76,13 @@ class DeletePost(DeleteView):
     model = Post
     success_url = reverse_lazy('main')
     template_name = 'delete.html'
+
+
+    def get_object(self, *args, **kwargs):
+        obj = super().get_object(*args, **kwargs)
+        if obj.author != self.request.user:
+            raise PermissionDenied()
+        return obj
 
 
 class ViewPost(FormMixin, DetailView):
@@ -93,7 +107,7 @@ class ViewPost(FormMixin, DetailView):
 
     def post(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
-            return HttpResponseForbidden()
+            raise PermissionDenied()
         self.object = self.get_object()
         name = request.user
         comment = request.POST['body']
