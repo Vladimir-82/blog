@@ -54,16 +54,9 @@
                                                 {{ comment.body }}
                                             </p>
                                             {% if comment.name.pk == request.user.pk %}
-
-
-
                                                 <p style="text-align: left">
                                                     <a href="{% url 'update_comment' comment.pk %}" style="text-decoration: none; font-size: 13px"> Correct your comment </a>
                                                 </p>
-
-
-
-
                                             {% endif %}
                                         </div>
                                     </div>
