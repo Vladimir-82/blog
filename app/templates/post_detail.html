@@ -45,17 +45,11 @@
                                                 User: {{ comment.name }} Email: {{ comment.email }}
                                             </span>
                                             <span class="be-comment-time">
-                                                Created: {{ comment.created_on }}
-                                            </span>
-
-
-                                            <div id="update_comment" style="display:none">
-                                                <span class="be-comment-time">
+                                                {% if comment.created_on.time.second != comment.updated_on.time.second %}
                                                     Corrected: {{ comment.updated_on }}
-                                                </span>
-                                            </div>
-
-
+                                                {% endif %}
+                                                 Created: {{ comment.created_on }}
+                                            </span>
                                             <p class="be-comment-text" style="text-align: left">
                                                 {{ comment.body }}
                                             </p>
@@ -64,7 +58,7 @@
 
 
                                                 <p style="text-align: left">
-                                                    <a href="{% url 'update_comment' comment.pk %}" style="text-decoration: none; font-size: 13px" id="link_comment"> Correct your comment </a>
+                                                    <a href="{% url 'update_comment' comment.pk %}" style="text-decoration: none; font-size: 13px"> Correct your comment </a>
                                                 </p>
 
 
