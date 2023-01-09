@@ -45,15 +45,31 @@
                                                 User: {{ comment.name }} Email: {{ comment.email }}
                                             </span>
                                             <span class="be-comment-time">
-                                                {{ comment.created_on }}
+                                                Created: {{ comment.created_on }}
                                             </span>
+
+
+                                            <div id="update_comment" style="display:none">
+                                                <span class="be-comment-time">
+                                                    Corrected: {{ comment.updated_on }}
+                                                </span>
+                                            </div>
+
+
                                             <p class="be-comment-text" style="text-align: left">
                                                 {{ comment.body }}
                                             </p>
                                             {% if comment.name.pk == request.user.pk %}
+
+
+
                                                 <p style="text-align: left">
-                                                    <a href="{% url 'update_comment' comment.pk %}" style="text-decoration: none; font-size: 13px"> Correct your comment </a>
+                                                    <a href="{% url 'update_comment' comment.pk %}" style="text-decoration: none; font-size: 13px" id="link_comment"> Correct your comment </a>
                                                 </p>
+
+
+
+
                                             {% endif %}
                                         </div>
                                     </div>
