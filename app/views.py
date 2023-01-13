@@ -113,6 +113,16 @@ class ViewPost(FormMixin, DetailView):
     template_name = 'post_detail.html'
 
 
+    def get_object(self):
+        '''
+        Increases the number of views
+        '''
+        object = super().get_object()
+        object.views += 1
+        object.save()
+        return object
+
+
     def get_success_url(self):
         pk = self.kwargs["pk"]
         return reverse('view_news', kwargs={"pk": pk})
