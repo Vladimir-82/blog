@@ -113,15 +113,6 @@ class ViewPost(FormMixin, DetailView):
     template_name = 'post_detail.html'
 
 
-    def get_object(self):
-        '''
-        Increases the number of views
-        '''
-        object = super().get_object()
-        object.views += 1
-        object.save()
-        return object
-
 
     def get_success_url(self):
         pk = self.kwargs["pk"]
@@ -129,9 +120,17 @@ class ViewPost(FormMixin, DetailView):
 
 
     def get_context_data(self, **kwargs):
-        self.object = self.get_object()
+        '''
+        Increases the number of views and shows comments
+        '''
+        pk = self.kwargs["pk"]
+        object = Post.objects.get(pk=pk)
+        object.views += 1
+        object.save()
+
+        object = self.get_object()
         context = super().get_context_data(**kwargs)
-        queryset = Comment.objects.filter(post=self.object)
+        queryset = Comment.objects.filter(post=object)
         context['comments'] = queryset
         context['count_comments'] = queryset.count()
         return context
@@ -139,10 +138,10 @@ class ViewPost(FormMixin, DetailView):
     def post(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
             raise PermissionDenied()
-        self.object = self.get_object()
+        object = self.get_object()
         name = request.user
         comment = request.POST['body']
-        Comment.objects.create(post=self.object, name=name,
+        Comment.objects.create(post=object, name=name,
                                email=name.email, body=comment
                                )
         form = self.get_form()
