@@ -123,12 +123,9 @@ class ViewPost(FormMixin, DetailView):
         '''
         Increases the number of views and shows comments
         '''
-        pk = self.kwargs["pk"]
-        object = Post.objects.get(pk=pk)
+        object = super().get_object()
         object.views += 1
         object.save()
-
-        object = self.get_object()
         context = super().get_context_data(**kwargs)
         queryset = Comment.objects.filter(post=object)
         context['comments'] = queryset
