@@ -21,30 +21,73 @@
             </div>
         </div>
     </div>
-    <h5 class="card-title">Views: {{ post_item.views }} Likes: {{ post_item.likes }} Dislikes: {{ post_item.dislikes }}</h5>
+    <h5 class="card-title">Views: {{ post_item.views }}</h5>
 
 
 
 
 
 
-    <div class="main_buttons">
+    <div class="like-container">
 
-        <i class="fa-regular fa-heart fa-3x"></i>
-        <i class="fa-solid fa-heart fa-3x"></i>
+        Likes: {{ post_item.likes }}
+        <i class="fa-regular fa-heart fa-2x"></i>
+{#        <i class="fa-solid fa-heart fa-2x"></i>#}
 
 
 {#        <input type="hidden" id="like" value={{ post_item.likes }}>#}
 {#        <button type="button" class="btn btn-outline-success" id="like_button" style="float: left; margin-left: 40%">Like</button>#}
-
+    </div>
 
         <script>
+
+
                 {#$(document).ready(function() {#}
                 {#    $('#like_button').click(function() {#}
                 {#        var likes = $("#like").attr("value");#}
                 {#    alert(likes);#}
                 {#    });#}
                 {#    });#}
+            function getCookie(name) {
+                let cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    const cookies = document.cookie.split(';');
+                    for (let i = 0; i < cookies.length; i++) {
+                        const cookie = cookies[i].trim();
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                            }
+                        }
+                    }
+                    return cookieValue;
+                }
+            const csrftoken = getCookie('csrftoken');
+
+
+
+
+            let btn = document.querySelector("i")
+            let post_id = "{{ post_item.id }}"
+
+            btn.addEventListener("click", likePost)
+
+            function likePost(e){
+                let url = "{% url 'like' %}"
+                const data = {id: post_id}
+
+                fetch(url, {
+                    method: "POST",
+                    headers: {"Content-Type": "application/json",
+                    'X-CSRFToken': csrftoken
+                    },
+                    body: JSON.stringify(data)
+                })
+                .then(res => res.json())
+                .then(data => {
+                    console.log(data)
+                })
+            }
 
 
 

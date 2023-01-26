@@ -1,4 +1,5 @@
 from django.core.exceptions import PermissionDenied
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import login, logout
@@ -12,8 +13,8 @@ from .forms import UserRegisterForm, UserLoginForm, PostForm, CommentForm
 from .utils import *
 
 
-
 from .models import Post, Category, Comment
+import json
 
 
 class MainListView(ListView):
@@ -189,3 +190,18 @@ def user_logout(request):
     '''
     logout(request)
     return redirect('login')
+
+
+def like_post(request):
+    data = json.loads(request.body)
+    id = data["id"]
+    post = Post.objects.get(id=id)
+
+    if request.user.is_authenticated:
+
+        if post.likes.filter(id=request.user.id).exists():
+            post.likes.remove(request.user)
+        else:
+            post.likes.add(request.user)
+
+    return JsonResponse("It is working", safe=False)
