@@ -22,28 +22,34 @@
         </div>
     </div>
     <h5 class="card-title">Views: {{ post_item.views }} Likes: {{ post_item.likes }} Dislikes: {{ post_item.dislikes }}</h5>
+
+
+
+
+
+
     <div class="main_buttons">
 
+        <i class="fa-regular fa-heart fa-3x"></i>
+        <i class="fa-solid fa-heart fa-3x"></i>
 
 
-
-        <input type="hidden" id="like" value={{ post_item.likes }}>
-        <button type="button" class="btn btn-outline-success" id="like_button" style="float: left; margin-left: 40%">Like</button>
+{#        <input type="hidden" id="like" value={{ post_item.likes }}>#}
+{#        <button type="button" class="btn btn-outline-success" id="like_button" style="float: left; margin-left: 40%">Like</button>#}
 
 
         <script>
-                $(document).ready(function() {
-                    $('#like_button').click(function() {
-                        var likes = $("#like").attr("value");
-                    alert(likes);
-                    });
-                    });
+                {#$(document).ready(function() {#}
+                {#    $('#like_button').click(function() {#}
+                {#        var likes = $("#like").attr("value");#}
+                {#    alert(likes);#}
+                {#    });#}
+                {#    });#}
+
+
+
         </script>
 
-
-
-        <button type="button" class="btn btn-outline-danger" id="dislike_button" style="float: right; margin-right: 40%">Dislike</button>
-    </div>
 
 
 
