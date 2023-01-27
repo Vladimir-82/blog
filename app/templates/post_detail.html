@@ -30,24 +30,17 @@
 
     <div class="like-container">
 
-        Likes: {{ post_item.likes }}
+        Likes: <p class="num-of-likes" id="num">{{ post_item.likes.count }}</p>
         <i class="fa-regular fa-heart fa-2x"></i>
 {#        <i class="fa-solid fa-heart fa-2x"></i>#}
 
 
-{#        <input type="hidden" id="like" value={{ post_item.likes }}>#}
-{#        <button type="button" class="btn btn-outline-success" id="like_button" style="float: left; margin-left: 40%">Like</button>#}
     </div>
 
         <script>
 
 
-                {#$(document).ready(function() {#}
-                {#    $('#like_button').click(function() {#}
-                {#        var likes = $("#like").attr("value");#}
-                {#    alert(likes);#}
-                {#    });#}
-                {#    });#}
+
             function getCookie(name) {
                 let cookieValue = null;
                 if (document.cookie && document.cookie !== '') {
@@ -65,17 +58,14 @@
             const csrftoken = getCookie('csrftoken');
 
 
-
-
             let btn = document.querySelector("i")
+            let num_of_likes = document.getElementById("num")
             let post_id = "{{ post_item.id }}"
 
             btn.addEventListener("click", likePost)
-
             function likePost(e){
                 let url = "{% url 'like' %}"
                 const data = {id: post_id}
-
                 fetch(url, {
                     method: "POST",
                     headers: {"Content-Type": "application/json",
@@ -86,6 +76,18 @@
                 .then(res => res.json())
                 .then(data => {
                     console.log(data)
+                    if (data["check"] == 1){
+                        btn.classList.remove("fa-regular")
+                        btn.classList.add("fa-solid")
+                    }
+                    else if (data["check"] == 0){
+                        btn.classList.remove("fa-solid")
+                        btn.classList.add("fa-regular")
+                    }
+                    else {
+                        alert("You need to login")
+                    }
+                    num_of_likes.innerHTML = data["number_of_likes"]
                 })
             }
 

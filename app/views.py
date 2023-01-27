@@ -3,6 +3,7 @@ from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import login, logout
+from django.contrib.auth.decorators import login_required
 
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView, CreateView, DeleteView, \
@@ -192,16 +193,29 @@ def user_logout(request):
     return redirect('login')
 
 
+@login_required
 def like_post(request):
     data = json.loads(request.body)
     id = data["id"]
     post = Post.objects.get(id=id)
+    cheker = None
+
 
     if request.user.is_authenticated:
 
         if post.likes.filter(id=request.user.id).exists():
             post.likes.remove(request.user)
+            cheker = 0
+
         else:
             post.likes.add(request.user)
+            cheker = 1
 
-    return JsonResponse("It is working", safe=False)
+    likes = post.likes.count()
+
+    info = {
+        "check": cheker,
+        "number_of_likes": likes,
+    }
+
+    return JsonResponse(info, safe=False)
