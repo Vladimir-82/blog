@@ -21,26 +21,18 @@
             </div>
         </div>
     </div>
+
     <h5 class="card-title">Views: {{ post_item.views }}</h5>
 
-
-
-
-
-
     <div class="like-container">
-
         Likes: <p class="num-of-likes" id="num">{{ post_item.likes.count }}</p>
-        <i class="fa-regular fa-heart fa-2x"></i>
-{#        <i class="fa-solid fa-heart fa-2x"></i>#}
-
-
+        {% if msg %}
+            <i class="fa-solid fa-heart fa-2x"></i>
+        {% else %}
+            <i class="fa-regular fa-heart fa-2x"></i>
+        {% endif %}
     </div>
-
         <script>
-
-
-
             function getCookie(name) {
                 let cookieValue = null;
                 if (document.cookie && document.cookie !== '') {
@@ -90,13 +82,7 @@
                     num_of_likes.innerHTML = data["number_of_likes"]
                 })
             }
-
-
-
         </script>
-
-
-
 
     {% if post_item.author.pk == request.user.pk %}
         <div class="main_buttons">

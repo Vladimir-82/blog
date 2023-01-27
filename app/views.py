@@ -3,8 +3,6 @@ from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import login, logout
-from django.contrib.auth.decorators import login_required
-
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView, CreateView, DeleteView, \
     UpdateView
@@ -12,9 +10,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.edit import FormMixin
 from .forms import UserRegisterForm, UserLoginForm, PostForm, CommentForm
 from .utils import *
-
-
-from .models import Post, Category, Comment
+from .models import Post, Comment
 import json
 
 
@@ -29,6 +25,7 @@ class MainListView(ListView):
         context = super().get_context_data(**kwargs)
         context['post'] = Post.objects.all()
         return context
+
 
 class CategoryListView(ListView):
     template_name = 'main.html'
@@ -64,7 +61,6 @@ class UpdateComment(UpdateView):
     model = Comment
     form_class = CommentForm
     template_name = 'update_comment.html'
-    # queryset = Post
 
     def get_object(self, *args, **kwargs):
         obj = super().get_object(*args, **kwargs)
@@ -114,8 +110,6 @@ class ViewPost(FormMixin, DetailView):
     context_object_name = 'post_item'
     template_name = 'post_detail.html'
 
-
-
     def get_success_url(self):
         pk = self.kwargs["pk"]
         return reverse('view_news', kwargs={"pk": pk})
@@ -128,19 +122,25 @@ class ViewPost(FormMixin, DetailView):
         object = super().get_object()
         object.views += 1
         object.save()
+        msg = False
+        current_user_id = self.request.user.id
+        if object.likes.filter(id=current_user_id).exists():
+            msg = True
+
         context = super().get_context_data(**kwargs)
         queryset = Comment.objects.filter(post=object)
         context['comments'] = queryset
         context['count_comments'] = queryset.count()
+        context['msg'] = msg
         return context
 
     def post(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
             raise PermissionDenied()
-        object = self.get_object()
+        obj = self.get_object()
         name = request.user
         comment = request.POST['body']
-        Comment.objects.create(post=object, name=name,
+        Comment.objects.create(post=obj, name=name,
                                email=name.email, body=comment
                                )
         form = self.get_form()
@@ -148,8 +148,6 @@ class ViewPost(FormMixin, DetailView):
             return self.form_valid(form)
         else:
             return self.form_invalid(form)
-
-
 
 
 def register(request):
@@ -193,20 +191,16 @@ def user_logout(request):
     return redirect('login')
 
 
-@login_required
 def like_post(request):
     data = json.loads(request.body)
-    id = data["id"]
-    post = Post.objects.get(id=id)
+    current_post_id = data["id"]
+    post = Post.objects.get(id=current_post_id)
     cheker = None
 
-
     if request.user.is_authenticated:
-
         if post.likes.filter(id=request.user.id).exists():
             post.likes.remove(request.user)
             cheker = 0
-
         else:
             post.likes.add(request.user)
             cheker = 1
