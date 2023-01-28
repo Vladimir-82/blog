@@ -15,29 +15,23 @@ import json
 
 
 class MainListView(ListView):
+    """Shows all posts on the main page"""
     template_name = 'main.html'
     context_object_name = 'post'
-
-    def get_queryset(self):
-        return Post.objects.all()
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['post'] = Post.objects.all()
-        return context
+    queryset = Post.objects.all()
 
 
 class CategoryListView(ListView):
+    """Shows posts by category on the main page"""
     template_name = 'main.html'
-    context_object_name = 'post'
-
 
     def get_queryset(self):
+        """Returns posts by category"""
         return Post.objects.filter(
             category_id=self.kwargs['category_id']).select_related('category')
 
-
     def get_context_data(self, **kwargs):
+        """Returns contexts name"""
         context = super().get_context_data(**kwargs)
         context['post'] = Post.objects.filter(
             category_id=self.kwargs['category_id']).select_related('category')
@@ -45,59 +39,65 @@ class CategoryListView(ListView):
 
 
 class CreatePost(LoginRequiredMixin, CreateView):
+    """Create new post"""
     form_class = PostForm
     template_name = 'create.html'
     success_url = reverse_lazy('main')
     login_url = '/login/'
 
     def form_valid(self, form):
+        """Form validation"""
         form.instance.author = self.request.user
         return super().form_valid(form)
 
 
-
-
 class UpdateComment(UpdateView):
+    """Update comment"""
     model = Comment
     form_class = CommentForm
     template_name = 'update_comment.html'
 
     def get_object(self, *args, **kwargs):
+        """Comment author validation"""
         obj = super().get_object(*args, **kwargs)
         if obj.name != self.request.user:
             raise PermissionDenied()
         return obj
 
     def get_success_url(self):
+        """Redirect to current post"""
         pk = self.kwargs["pk"]
         current_post = Post.objects.get(comment__id=pk)
         return reverse('view_news', kwargs={"pk": current_post.pk})
 
 
-
 class UpdatePost(UpdateView):
+    """Update post"""
     model = Post
     form_class = PostForm
     template_name = 'update.html'
 
     def get_object(self, *args, **kwargs):
+        """Post author validation"""
         obj = super().get_object(*args, **kwargs)
         if obj.author != self.request.user:
             raise PermissionDenied()
         return obj
 
     def get_success_url(self):
+        """Redirect to current post"""
         pk = self.kwargs["pk"]
         return reverse('view_news', kwargs={"pk": pk})
 
 
 class DeletePost(DeleteView):
+    """Delete post"""
     model = Post
     success_url = reverse_lazy('main')
     template_name = 'delete.html'
 
-
     def get_object(self, *args, **kwargs):
+        """Post author validation"""
         obj = super().get_object(*args, **kwargs)
         if obj.author != self.request.user:
             raise PermissionDenied()
@@ -105,20 +105,19 @@ class DeletePost(DeleteView):
 
 
 class ViewPost(FormMixin, DetailView):
+    """Detail view post"""
     form_class = CommentForm
     model = Post
     context_object_name = 'post_item'
     template_name = 'post_detail.html'
 
     def get_success_url(self):
+        """Redirect to current post"""
         pk = self.kwargs["pk"]
         return reverse('view_news', kwargs={"pk": pk})
 
-
     def get_context_data(self, **kwargs):
-        '''
-        Increases the number of views and shows comments
-        '''
+        """Increases the number of views, shows comments, flags of likes"""
         object = super().get_object()
         object.views += 1
         object.save()
@@ -135,6 +134,7 @@ class ViewPost(FormMixin, DetailView):
         return context
 
     def post(self, request, *args, **kwargs):
+        """Create new post"""
         if not request.user.is_authenticated:
             raise PermissionDenied()
         obj = self.get_object()
@@ -151,9 +151,7 @@ class ViewPost(FormMixin, DetailView):
 
 
 def register(request):
-    '''
-    Registration of service users
-    '''
+    """Registration of service users"""
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
         if form.is_valid():
@@ -169,9 +167,7 @@ def register(request):
 
 
 def user_login(request):
-    '''
-    Service user logging
-    '''
+    """Service user logging"""
     if request.method == 'POST':
         form = UserLoginForm(data=request.POST)
         if form.is_valid():
@@ -184,14 +180,13 @@ def user_login(request):
 
 
 def user_logout(request):
-    '''
-    Unlogging service users
-    '''
+    """Unlogging service users"""
     logout(request)
     return redirect('login')
 
 
 def like_post(request):
+    """likes manager"""
     data = json.loads(request.body)
     current_post_id = data["id"]
     post = Post.objects.get(id=current_post_id)
