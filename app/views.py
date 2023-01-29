@@ -8,6 +8,7 @@ from django.views.generic import ListView, DetailView, CreateView, DeleteView, \
     UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.edit import FormMixin
+from django.db.models import Q
 from .forms import UserRegisterForm, UserLoginForm, PostForm, CommentForm
 from .utils import *
 from .models import Post, Comment
@@ -208,3 +209,15 @@ def like_post(request):
     }
 
     return JsonResponse(info, safe=False)
+
+
+def search(request):
+    print(request, '@@@@@')
+    your_search_query = 'world'
+    results = Post.objects.filter(
+        Q(title__icontains=your_search_query) | Q(
+            body__icontains=your_search_query))
+    data = {"search": results}
+
+    return render(request, 'search.html', data)
+

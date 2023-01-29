@@ -15,4 +15,5 @@ urlpatterns = [
     path('login/', user_login, name='login'),
     path('logout/', user_logout, name='logout'),
     path('like_post', like_post, name='like'),
+    path('search', search, name='search'),
             ]
