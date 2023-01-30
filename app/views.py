@@ -211,13 +211,17 @@ def like_post(request):
     return JsonResponse(info, safe=False)
 
 
-def search(request):
-    print(request, '@@@@@')
-    your_search_query = 'world'
-    results = Post.objects.filter(
-        Q(title__icontains=your_search_query) | Q(
-            body__icontains=your_search_query))
-    data = {"search": results}
+class SearchResultsView(ListView):
+    model = Post
+    template_name = "search.html"
+    context_object_name = 'search'
 
-    return render(request, 'search.html', data)
-
+    def get_queryset(self):
+        query = self.request.GET.get('search')
+        if query:
+            result = Post.objects.filter(Q(
+                title__icontains=query) | Q(
+                body__icontains=query))
+        else:
+            result = None
+        return result

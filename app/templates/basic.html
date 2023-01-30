@@ -13,7 +13,15 @@
 <body>
 <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
   <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6" href="{% url  'main' %}">Vladimirs blog</a>
-  <input class="form-control form-control-dark w-100 rounded-0 border-0" type="text" placeholder="Search" aria-label="Search">
+
+
+    <form action="{% url 'search' %}" method="get" class="form-inline my-2 my-lg-0">
+      <div class="search-panel" style="display: flex; margin-top: 5px; margin-bottom: 5px">
+      <input class="form-control mr-sm-2" type="text" placeholder="Search" name="search">
+      <button class="btn btn-outline-success my-2 my-sm-0" style="margin-left: 5px" type="submit">Search</button>
+      </div>
+    </form>
+
   <div class="navbar-nav" style="margin-right: 10px; margin-left: 5px">
     <div class="nav-item text-nowrap">
       <span class="navbar-text">
