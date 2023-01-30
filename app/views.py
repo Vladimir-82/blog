@@ -212,11 +212,13 @@ def like_post(request):
 
 
 class SearchResultsView(ListView):
+    """Search in posts by title and content"""
     model = Post
     template_name = "search.html"
     context_object_name = 'search'
 
     def get_queryset(self):
+        """search in posts by title and content"""
         query = self.request.GET.get('search')
         if query:
             result = Post.objects.filter(Q(
