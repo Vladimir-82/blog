@@ -16,4 +16,5 @@ urlpatterns = [
     path('logout/', user_logout, name='logout'),
     path('like_post', like_post, name='like'),
     path('search', SearchResultsView.as_view(), name='search'),
+    path('curent_user/', curent_user, name='user'),
             ]

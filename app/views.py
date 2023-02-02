@@ -227,3 +227,8 @@ class SearchResultsView(ListView):
         else:
             result = None
         return result
+
+
+def curent_user(request):
+    curent_user = request.user.username
+    return render(request, 'user.html', {"curent_user": curent_user})
