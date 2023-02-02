@@ -39,7 +39,15 @@ class Comment(models.Model):
 class Category(models.Model):
     title = models.CharField(max_length=150)
 
-
     def __str__(self):
         return self.title
 
+
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    friends = models.ManyToManyField(User, related_name='friends', blank=True)
+    created_on = models.DateTimeField(auto_now_add=True)
+    updated_on = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return str(self.user)
