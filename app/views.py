@@ -2,6 +2,7 @@ from django.core.exceptions import PermissionDenied
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.contrib.auth.models import User
 from django.contrib.auth import login, logout
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView, CreateView, DeleteView, \
@@ -19,7 +20,7 @@ class MainListView(ListView):
     """Shows all posts on the main page"""
     template_name = 'main.html'
     context_object_name = 'post'
-    queryset = Post.objects.all()
+    model = Post
 
 
 class CategoryListView(ListView):
@@ -229,6 +230,6 @@ class SearchResultsView(ListView):
         return result
 
 
-def curent_user(request):
-    curent_user = request.user.username
-    return render(request, 'user.html', {"curent_user": curent_user})
+def current_user(request, author_id):
+    current_user = User.objects.get(id=author_id)
+    return render(request, 'user.html', {"current_user": current_user})
