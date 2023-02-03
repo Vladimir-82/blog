@@ -2,10 +2,11 @@
 {% block title %}user{% endblock %}
 {% block content %}
 <div class="inner">
-
-    {{ current_user.username }}
-    {{ current_user.date_joined }}
-    {{ current_user.email }}
-
+    <h4 class="card-title">User information</h4>
+</div>
+<div class="card mb-3">
+    <h5 class="card-title">Username: {{ current_user.username }}</h5>
+    <h5 class="card-title">Date of registration: {{ current_user.date_joined }}</h5>
+    <h5 class="card-title">E-mail address: {{ current_user.email }}</h5>
 </div>
 {% endblock %}
