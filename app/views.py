@@ -12,7 +12,7 @@ from django.views.generic.edit import FormMixin
 from django.db.models import Q
 from .forms import UserRegisterForm, UserLoginForm, PostForm, CommentForm
 from .utils import *
-from .models import Post, Comment
+from .models import Post, Comment, Profile
 import json
 
 
@@ -232,4 +232,20 @@ class SearchResultsView(ListView):
 
 def current_user(request, author_id):
     current_user = User.objects.get(id=author_id)
+    print(current_user, 'currrrrrrrrrrrrr')
+
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            if request.POST.get('_method') == 'add':
+                print('addddddddddd')
+                new_friend = Profile.objects.create()
+                new_friend.friends.add(current_user)
+            else:
+                print('removeeeeeeeeeee')
+                print(request.user.id, '@@@@@@')
+                Profile.objects.get(id=request.user.id).friends.remove(current_user)
+
+
     return render(request, 'user.html', {"current_user": current_user})
+
+

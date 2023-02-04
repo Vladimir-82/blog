@@ -1,27 +1,27 @@
 {% extends "basic.html" %}
 {% block title %}search{% endblock %}
 {% block content %}
-        {% if search %}
-            {% for pos in search %}
-                <div class="card-body">
-                        <div class="p-3 border bg-light">
-                            <h5 class="card-title">{{ pos.title }}</h5>
-                            <h5 class="card-title">From: {{ pos.author }}</h5>
-                            <h5 class="card-title">{{ pos.created_at }}</h5>
-                                <a href="{% url 'view_news' pos.pk %}" style="text-decoration: none">
-                                {% if pos.photo %}
-                                    <img src="{{ pos.photo.url }}" alt="" width="350" class="mr-3">
-                                {% else %}
-                                    <img src="https://picsum.photos/id/1060/350/235/?blur=2" alt="" class="mr-3">
-                                {% endif %}
-                                </a>
-                            <h5 class="card-title">Views: {{ pos.views }} Likes: {{ pos.likes.count }}</h5>
-                        </div>
-            {% endfor %}
-        {% else %}
-            <h5 class="card-title">No results...</h5>
-        {% endif %}
-            <a class="btn btn-outline-primary" style="margin-top: 10px" href="{% url  'create' %}">Add new post</a>
+    {% if search %}
+        {% for pos in search %}
+            <div class="card-body">
+                <div class="p-3 border bg-light">
+                    <h5 class="card-title">{{ pos.title }}</h5>
+                    <h5 class="card-title">From: {{ pos.author }}</h5>
+                    <h5 class="card-title">{{ pos.created_at }}</h5>
+                        <a href="{% url 'view_news' pos.pk %}" style="text-decoration: none">
+                        {% if pos.photo %}
+                            <img src="{{ pos.photo.url }}" alt="" width="350" class="mr-3">
+                        {% else %}
+                            <img src="https://picsum.photos/id/1060/350/235/?blur=2" alt="" class="mr-3">
+                        {% endif %}
+                        </a>
+                    <h5 class="card-title">Views: {{ pos.views }} Likes: {{ pos.likes.count }}</h5>
                 </div>
+        {% endfor %}
+    {% else %}
+        <h5 class="card-title">No results...</h5>
+    {% endif %}
+        <a class="btn btn-outline-primary" style="margin-top: 10px" href="{% url  'create' %}">Add new post</a>
+            </div>
 
 {% endblock %}

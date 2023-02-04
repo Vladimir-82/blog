@@ -8,5 +8,25 @@
     <h5 class="card-title">Username: {{ current_user.username }}</h5>
     <h5 class="card-title">Date of registration: {{ current_user.date_joined }}</h5>
     <h5 class="card-title">E-mail address: {{ current_user.email }}</h5>
+
+    <form action="" method="post" class="form-inline my-2 my-lg-0">
+
+          {% csrf_token %}
+          <input type="hidden" name="_method" value="add">
+          <button class="btn btn-outline-success my-2 my-sm-0" id="Follow" type="submit">Follow</button>
+
+
+    </form>
+
+    <form action="" method="post" class="form-inline my-2 my-lg-0">
+
+          {% csrf_token %}
+          <input type="hidden" name="_method" value="remove">
+          <button class="btn btn-outline-success my-2 my-sm-0" id="Unfollow" type="submit">Unfollow</button>
+
+    </form>
+
+
+
 </div>
 {% endblock %}
