@@ -16,5 +16,5 @@ urlpatterns = [
     path('logout/', user_logout, name='logout'),
     path('like_post', like_post, name='like'),
     path('search', SearchResultsView.as_view(), name='search'),
-    path('current_user/<int:author_id>/', current_user, name='user'),
+    path('author/<int:author_id>/', author_info, name='author'),
             ]

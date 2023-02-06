@@ -230,22 +230,22 @@ class SearchResultsView(ListView):
         return result
 
 
-def current_user(request, author_id):
-    current_user = User.objects.get(id=author_id)
-    print(current_user, 'currrrrrrrrrrrrr')
+def author_info(request, author_id):
+    author = User.objects.get(id=author_id)
+    print(author, 'currrrrrrrrrrrrr')
 
     if request.user.is_authenticated:
         if request.method == 'POST':
             if request.POST.get('_method') == 'add':
                 print('addddddddddd')
                 new_friend = Profile.objects.create()
-                new_friend.friends.add(current_user)
+                new_friend.friends.add(author.id)
             else:
                 print('removeeeeeeeeeee')
                 print(request.user.id, '@@@@@@')
-                Profile.objects.get(id=request.user.id).friends.remove(current_user)
+                Profile.objects.get(id=request.user.id).friends.remove(author.id)
 
 
-    return render(request, 'user.html', {"current_user": current_user})
+    return render(request, 'author.html', {"author_info": author})
 
 

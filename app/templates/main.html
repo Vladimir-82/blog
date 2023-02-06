@@ -6,7 +6,7 @@
             <div class="card-body">
                 <div class="p-3 border bg-light">
                     <h5 class="card-title">{{ pos.title }}</h5>
-                    <a href="{% url 'user' pos.author.pk %}" style="text-decoration: none">{{ pos.author }}</a>
+                    <a href="{% url 'author' pos.author.pk %}" style="text-decoration: none">{{ pos.author }}</a>
                     <h5 class="card-title">{{ pos.created_at }}</h5>
                         <a href="{% url 'view_news' pos.pk %}" style="text-decoration: none">
                         {% if pos.photo %}
