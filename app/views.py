@@ -233,33 +233,29 @@ class SearchResultsView(ListView):
 def author_info(request, author_id):
     author = User.objects.get(id=author_id)
     print(author.username, 'authorrrrrr%%%%%%%%%%%%%%%%%%%')
-    print(author.id, '****************')
+
 
 
     us = request.user
     print(us, 'current user!!!')
 
-    current_users_que = User.objects.filter(id=us)
-    print(current_users_que, 'current_users_que!!!')
+    curent_users_friends = Profile.objects.all()
+    print(curent_users_friends, 'curent_users_friends')
 
 
     if request.user.is_authenticated:
         if request.method == 'POST':
 
-            curent_users_friends = Profile.objects.filter(name__user=us)
-            print(curent_users_friends, 'curent_users_friends')
 
-
-
-            all_users = [user.name.username for user in curent_users_friends]
+            all_users = [user for user in curent_users_friends]
             print(all_users, 'alllllllllll')
 
             if request.POST.get('_method') == 'add':
                 if author.username not in all_users:
-                    new_friend = Profile.objects.create(name=author)
+                    new_friend = Profile.objects.create(name=us)
                     print('createeeeeeeeeeeeeeee')
                 else:
-                    new_friend = Profile.objects.get(name=author)
+                    new_friend = Profile.objects.get(name=us)
                     print(new_friend, 'add! to ')
                     print('addddd to already created')
                 new_friend.friends.add(author)
