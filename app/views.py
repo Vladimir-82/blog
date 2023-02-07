@@ -239,7 +239,7 @@ def author_info(request, author_id):
     us = request.user
     print(us, 'current user!!!')
 
-    curent_users_friends = Profile.objects.all()
+    curent_users_friends = Profile.objects.filter(friends=author)
     print(curent_users_friends, 'curent_users_friends')
 
 
@@ -247,24 +247,24 @@ def author_info(request, author_id):
         if request.method == 'POST':
 
 
-            all_users = [user for user in curent_users_friends]
+            all_users = [user.name for user in curent_users_friends]
             print(all_users, 'alllllllllll')
 
             if request.POST.get('_method') == 'add':
                 if author.username not in all_users:
-                    new_friend = Profile.objects.create(name=us)
+                    new_friend = Profile.objects.create(name=author)
                     print('createeeeeeeeeeeeeeee')
                 else:
-                    new_friend = Profile.objects.get(name=us)
+                    new_friend = Profile.objects.get(name=author)
                     print(new_friend, 'add! to ')
                     print('addddd to already created')
-                new_friend.friends.add(author)
+                new_friend.friends.add(us.id)
                 print('addddddddddd')
 
-            # if request.POST.get('_method') == 'remove':
-            #     all_us = Profile.objects.filter(name=us)
-            #
-            #     print(all_us, 'al!*&%')
+            if request.POST.get('_method') == 'remove':
+                all_us = Profile.objects.get(name=author)
+                all_us.friends.remove(us.id)
+                print(all_us, 'removed')
 
 
     return render(request, 'author.html', {"author_info": author})
