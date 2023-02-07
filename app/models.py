@@ -44,4 +44,5 @@ class Category(models.Model):
 
 
 class Profile(models.Model):
+    name = models.ForeignKey(User, on_delete=models.CASCADE, default='')
     friends = models.ManyToManyField(User, related_name='friends', blank=True)

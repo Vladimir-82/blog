@@ -232,18 +232,43 @@ class SearchResultsView(ListView):
 
 def author_info(request, author_id):
     author = User.objects.get(id=author_id)
-    print(author, 'currrrrrrrrrrrrr')
+    print(author.username, 'authorrrrrr%%%%%%%%%%%%%%%%%%%')
+    print(author.id, '****************')
+
+
+    us = request.user
+    print(us, 'current user!!!')
+
+    current_users_que = User.objects.filter(id=us)
+    print(current_users_que, 'current_users_que!!!')
+
 
     if request.user.is_authenticated:
         if request.method == 'POST':
+
+            curent_users_friends = Profile.objects.filter(name__user=us)
+            print(curent_users_friends, 'curent_users_friends')
+
+
+
+            all_users = [user.name.username for user in curent_users_friends]
+            print(all_users, 'alllllllllll')
+
             if request.POST.get('_method') == 'add':
+                if author.username not in all_users:
+                    new_friend = Profile.objects.create(name=author)
+                    print('createeeeeeeeeeeeeeee')
+                else:
+                    new_friend = Profile.objects.get(name=author)
+                    print(new_friend, 'add! to ')
+                    print('addddd to already created')
+                new_friend.friends.add(author)
                 print('addddddddddd')
-                new_friend = Profile.objects.create()
-                new_friend.friends.add(author.id)
-            else:
-                print('removeeeeeeeeeee')
-                print(request.user.id, '@@@@@@')
-                Profile.objects.get(id=request.user.id).friends.remove(author.id)
+
+            # if request.POST.get('_method') == 'remove':
+            #     all_us = Profile.objects.filter(name=us)
+            #
+            #     print(all_us, 'al!*&%')
 
 
     return render(request, 'author.html', {"author_info": author})
