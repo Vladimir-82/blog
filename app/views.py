@@ -239,34 +239,91 @@ def author_info(request, author_id):
     us = request.user
     print(us, 'current user!!!')
 
-    curent_users_friends = Profile.objects.filter(friends=author)
-    print(curent_users_friends, 'curent_users_friends')
+    # cuser = User.objects.get(id=us.id)
 
 
     if request.user.is_authenticated:
         if request.method == 'POST':
 
-
-            all_users = [user.name for user in curent_users_friends]
-            print(all_users, 'alllllllllll')
-
             if request.POST.get('_method') == 'add':
-                if author.username not in all_users:
-                    new_friend = Profile.objects.create(name=author)
-                    print('createeeeeeeeeeeeeeee')
-                else:
-                    new_friend = Profile.objects.get(name=author)
-                    print(new_friend, 'add! to ')
-                    print('addddd to already created')
-                new_friend.friends.add(us.id)
-                print('addddddddddd')
+                curent_users_friends = Profile.objects.prefetch_related('friends').all()
+                all_user_friend = Profile.objects.all()
 
-            if request.POST.get('_method') == 'remove':
-                all_us = Profile.objects.get(name=author)
-                all_us.friends.remove(us.id)
-                print(all_us, 'removed')
+
+
+
+                curent_users_friends_list = [user.name for user in curent_users_friends]
+                print(curent_users_friends_list, 'current_users_friends##')
+
+                all_user_friend_list = [user.name for user in all_user_friend]
+                print(all_user_friend_list, 'all_users_friends@@')
+
+
+
+
+                if author.username not in curent_users_friends_list:
+                    if author.username not in all_user_friend_list:
+
+                        new_friend = Profile.objects.create(name=author)
+                        print('createeeeeeeeeeeeeeee')
+                    else:
+                        new_friend = Profile.objects.get(name=author)
+                        print(new_friend, 'add! to ')
+                        print('addddd to already created')
+                    new_friend.friends.add(author)
+                    print('addddddddddd')
+                else:
+                    print('You have already added this user to the friends!!!')
+
+
+
+    #         if request.POST.get('_method') == 'remove':
+    #             all_us = Profile.objects.get(name=author)
+    #             all_us.friends.remove(us.id)
+    #             print(all_us, 'removed')
 
 
     return render(request, 'author.html', {"author_info": author})
 
 
+
+
+
+# def author_info(request, author_id):
+#     author = User.objects.get(id=author_id)
+#     print(author.username, 'authorrrrrr%%%%%%%%%%%%%%%%%%%')
+#
+#
+#
+#     us = request.user
+#     print(us, 'current user!!!')
+#
+#     curent_users_friends = Profile.objects.filter(friends=author)
+#     print(curent_users_friends, 'curent_users_friends')
+#
+#
+#     if request.user.is_authenticated:
+#         if request.method == 'POST':
+#
+#
+#             all_users = [user.name for user in curent_users_friends]
+#             print(all_users, 'alllllllllll')
+#
+#             if request.POST.get('_method') == 'add':
+#                 if author.username not in all_users:
+#                     new_friend = Profile.objects.create(name=author)
+#                     print('createeeeeeeeeeeeeeee')
+#                 else:
+#                     new_friend = Profile.objects.get(name=author)
+#                     print(new_friend, 'add! to ')
+#                     print('addddd to already created')
+#                 new_friend.friends.add(us.id)
+#                 print('addddddddddd')
+#
+#             if request.POST.get('_method') == 'remove':
+#                 all_us = Profile.objects.get(name=author)
+#                 all_us.friends.remove(us.id)
+#                 print(all_us, 'removed')
+#
+#
+#     return render(request, 'author.html', {"author_info": author})
