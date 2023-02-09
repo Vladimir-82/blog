@@ -265,4 +265,5 @@ def author_info(request, author_id):
                 all_us.friends.remove(current_user)
 
 
+
     return render(request, 'author.html', {"author_info": author})
