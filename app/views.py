@@ -268,6 +268,10 @@ def author_info(request, author_id):
     return render(request, 'author.html', {"author_info": author})
 
 
-def get_request(request):
-    return request.user.id
 
+
+def get_followings(request):
+
+    current_user = request.user.id
+    followings = Profile.objects.filter(friends=current_user)
+    return followings

@@ -5,7 +5,7 @@ from django.db.models import Count
 
 from app.models import Category, Profile
 
-from app.views import get_request
+from app.views import get_followings
 
 register = template.Library()
 
@@ -18,6 +18,5 @@ def show_categories():
 
 @register.inclusion_tag('list_followings.html')
 def show_followings():
-    current_user = get_request()
-    followings = Profile.objects.filter(friends=current_user)
+    followings = get_followings()
     return {'followings': followings}
