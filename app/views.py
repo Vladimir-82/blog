@@ -234,7 +234,6 @@ def author_info(request, author_id):
 
     author = User.objects.get(id=author_id)
     current_user = request.user.id
-
     if request.user.is_authenticated:
         if request.method == 'POST':
             if request.POST.get('_method') == 'add':
@@ -267,3 +266,8 @@ def author_info(request, author_id):
 
 
     return render(request, 'author.html', {"author_info": author})
+
+
+def get_request(request):
+    return request.user.id
+
