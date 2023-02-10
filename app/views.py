@@ -246,6 +246,7 @@ def author_info(request, author_id):
                     [user.name.username for user in current_users_friends]
                 all_user_friend_list = \
                     [user.name.username for user in all_user_friends]
+                print(all_user_friend_list, 'All!!!!!!!!!!')
 
                 if author.username not in current_users_friends_list:
                     if author.username not in all_user_friend_list:
@@ -259,7 +260,8 @@ def author_info(request, author_id):
 
 
 
-            if request.POST.get('_method') == 'remove':
+            else:
+                print('reeeeeemove!!!!')
                 all_us = Profile.objects.get(name=author)
                 all_us.friends.remove(current_user)
 
@@ -270,8 +272,4 @@ def author_info(request, author_id):
 
 
 
-def get_followings(request):
 
-    current_user = request.user.id
-    followings = Profile.objects.filter(friends=current_user)
-    return followings

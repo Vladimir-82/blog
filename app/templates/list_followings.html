@@ -1,8 +1,8 @@
 <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
   <div class="position-sticky pt-3 sidebar-sticky">
     <ul class="nav flex-column">
+        <h4>Followings</h4>
         {% if followings %}
-            <h4>Followings</h4>
             {% for user in followings %}
                 <a href="{% url 'author' user.name.pk %}" style="text-decoration: none">{{ user.name }}</a>
             {% endfor %}

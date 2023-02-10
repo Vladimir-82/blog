@@ -1,11 +1,8 @@
 from django import template
 from django.db.models import Count
 
-
-
 from app.models import Category, Profile
 
-from app.views import get_followings
 
 register = template.Library()
 
@@ -18,5 +15,5 @@ def show_categories():
 
 @register.inclusion_tag('list_followings.html')
 def show_followings():
-    followings = get_followings()
+    followings = Profile.objects.prefetch_related('friends').all()
     return {'followings': followings}

@@ -1,20 +1,21 @@
-function hideCities () {
-    $("#cities").hide(1000, function (){
-        $("#hide").hide();
-        $("#show").show();
-    });
-}
-function showCities () {
-    $("#cities").show(1000, function (){
-        $("#hide").show();
-        $("#show").hide();
-    })
+$(document).ready(function () {
 
-}
-$(document).ready (function () {
-    $("#hide").bind ("click", hideCities);
-    $("#show").bind ("click", showCities);
-});
+
+            $("#follow").click(function () {
+
+
+                if ($('#input_field').attr('value') == 'add' ) {
+                    $("#input_field").attr("value", "remove");
+                    alert('add')
+                } else {
+                    $("#input_field").attr("value", "add");
+                    alert('remove')
+                            }
+
+
+
+                                        });
+                                        });
 
 
 
