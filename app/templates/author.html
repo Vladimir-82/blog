@@ -10,17 +10,17 @@
     <h5 class="card-title">E-mail address: {{ author_info_user.email }}</h5>
 
     <form action="" method="post" class="form-inline my-2 my-lg-0">
-
           {% csrf_token %}
           <input type="hidden" name="_method" value="add" id="input_field">
+          <input type="hidden" name="is_friend" value="{{ is_friend }}" id="is_friend">
           <button class="btn btn-outline-success my-2 my-sm-0" id="follow" type="submit">Follow</button>
 
-          <button class="btn btn-outline-success my-2 my-sm-0" id="unfollow" type="submit">Unfollow</button>
-
-
     </form>
-
-
+    <form action="" method="post" class="form-inline my-2 my-lg-0">
+          {% csrf_token %}
+          <input type="hidden" name="_method" value="remove" id="input_field">
+          <button class="btn btn-outline-success my-2 my-sm-0" id="unfollow" type="submit">Unfollow</button>
+    </form>
 
 </div>
 {% endblock %}

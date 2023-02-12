@@ -13,7 +13,9 @@ def show_categories():
     return {'categories': categories}
 
 
-@register.inclusion_tag('list_followings.html')
-def show_followings():
-    followings = Profile.objects.prefetch_related('friends').all()
+@register.inclusion_tag('list_followings.html', takes_context=True)
+def show_followings(context):
+    request = context['request']
+    current_user = request.user.id
+    followings = Profile.objects.filter(friends=current_user)
     return {'followings': followings}

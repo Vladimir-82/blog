@@ -70,6 +70,11 @@ TEMPLATES = [
     },
 ]
 
+
+CONTEXT_PROCESSORS = (
+    'django.contrib.auth.context_processors.auth'
+)
+
 WSGI_APPLICATION = 'blog.wsgi.application'
 
 

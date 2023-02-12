@@ -6,7 +6,7 @@
         Category: {{ post_item.category }}
     </div>
     <h5 class="card-title">{{ post_item.title }}</h5>
-    <a href="{% url 'user' post_item.author.pk %}" style="text-decoration: none">{{ post_item.author }}</a>
+    <a href="{% url 'author' post_item.author.pk %}" style="text-decoration: none">{{ post_item.author }}</a>
     <div class="card-body">
         {% if post_item.photo %}
             <img src="{{ post_item.photo.url }}" alt="" width="650" class="float-left mr-3">
