@@ -1,5 +1,16 @@
 {% load posts_tags %}
-{#<div class="columns" style="display: flex; flex-direction: column">#}
-    {% show_categories %}
-    {% show_followings %}
-{#</div>#}
+
+<div class="media">
+    <div class="p-3 border bg-light">
+        <div class="container">
+            {% show_categories %}
+        </div>
+    </div>
+</div>
+<div class="media">
+    <div class="p-3 border bg-light">
+        <div class="container">
+            {% show_followings %}
+        </div>
+    </div>
+</div>

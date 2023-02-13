@@ -13,8 +13,6 @@
 <body>
 <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
   <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6" href="{% url  'main' %}">Vladimirs blog</a>
-
-
     <form action="{% url 'search' %}" method="get" class="form-inline my-2 my-lg-0">
       <div class="search-panel" style="display: flex; margin-top: 5px; margin-bottom: 5px">
       <input class="form-control mr-sm-2" type="text" placeholder="Search" name="search">
@@ -35,26 +33,17 @@
   </div>
 </header>
 
-
-
 <div class="container-fluid">
-    <div class="row">
-
-
-
-            {% block sidebar %}
-            {% include '_sidebar.html' %}
-            {% endblock %}
-
-
-
-
+    <div class=side style="position: absolute">
+        {% block sidebar %}
+        {% include '_sidebar.html' %}
+        {% endblock %}
+    </div>
     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
           <h1 class="h3">Dashboard</h1>
       </div>
           <div class="centred">
-
           {% if messages %}
             {% for message in messages %}
                 {% if message.tags == 'error' %}
@@ -73,7 +62,6 @@
             {% endblock %}
           </div>
     </main>
-    </div>
 </div>
 </body>
 </html>
