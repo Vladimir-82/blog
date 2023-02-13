@@ -231,20 +231,16 @@ class SearchResultsView(ListView):
 
 
 def author_info(request, author_id):
+    """return following users"""
     current_user = request.user.id
     author = User.objects.get(id=author_id)
 
-    current_users_friends = Profile.objects.filter(friends=
-                                                   current_user
-                                                   )
+    current_users_friends_list = get_current_followings(request=request)
+
     all_user_friends = \
         Profile.objects.prefetch_related('friends').all()
-    current_users_friends_list = \
-        [user.name.username for user in current_users_friends]
     all_user_friend_list = \
         [user.name.username for user in all_user_friends]
-
-    is_friend = author.username in current_users_friends_list
 
     if request.user.is_authenticated:
         if request.method == 'POST':
@@ -255,17 +251,24 @@ def author_info(request, author_id):
                     else:
                         new_friend = Profile.objects.get(name=author)
                     new_friend.friends.add(current_user)
-                else:
-                    print('You have already added this user to the friends!!!')
             else:
-                all_us = Profile.objects.get(name=author)
-                all_us.friends.remove(current_user)
+                ex_friend = Profile.objects.get(name=author)
+                ex_friend.friends.remove(current_user)
+
+    current_users_friends_list = get_current_followings(request=request)
+    is_friend = author.username in current_users_friends_list
 
     return render(request, 'author.html', {"author_info": author,
                                             "is_friend": is_friend
                                            })
 
 
-
+def get_current_followings(request) -> list:
+    """return current users friends list"""
+    current_user = request.user.id
+    current_users_friends = Profile.objects.filter(friends=current_user)
+    current_users_friends_list = \
+        [user.name.username for user in current_users_friends]
+    return current_users_friends_list
 
 
