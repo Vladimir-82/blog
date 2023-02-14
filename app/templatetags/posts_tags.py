@@ -26,6 +26,9 @@ def show_following(context):
 def show_followers(context):
     request = context['request']
     current_user = request.user.id
-    # us = User.objects.get(id=current_user)
-    followers = User.objects.all()
-    return {'followers': followers}
+    if request.user.is_authenticated:
+
+
+        us = User.objects.get(id=current_user)
+        followers = User.objects.filter(profile__friends=current_user)
+        return {'followers': followers}
