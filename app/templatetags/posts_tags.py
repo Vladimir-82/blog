@@ -2,7 +2,7 @@ from django import template
 from django.db.models import Count
 from django.contrib.auth.models import User
 
-from app.models import Category, Profile
+from app.models import Category, Profile, Post
 
 
 register = template.Library()
@@ -23,12 +23,12 @@ def show_following(context):
 
 
 @register.inclusion_tag('list_followers.html', takes_context=True)
-def show_followers(context):
+def show_followers(context, author_id):
     request = context['request']
-    current_user = request.user.id
+
     if request.user.is_authenticated:
 
 
-        us = User.objects.get(id=current_user)
-        followers = User.objects.filter(profile__friends=current_user)
+
+        followers = Profile.objects.filter(name=author_id)
         return {'followers': followers}

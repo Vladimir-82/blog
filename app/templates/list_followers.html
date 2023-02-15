@@ -1,10 +1,12 @@
 <div class="position-sticky pt-3 sidebar-sticky">
     <ul class="nav flex-column">
         <h4>Followers</h4>
+
+
         {% if followers %}
             {% for user in followers %}
-                <p>{{ user.username }}</p>
-{#                <a href="{% url 'author' user.name.pk %}" style="text-decoration: none">{{ user.name }}</a>#}
+{#                <p>{{ user.username }}</p>#}
+                <a href="{% url 'author' user.name.pk %}" style="text-decoration: none">{{ user.name }}</a>
             {% endfor %}
         {% else %}
             No followers...
