@@ -28,7 +28,5 @@ def show_followers(context, author_id):
 
     if request.user.is_authenticated:
 
-
-
         followers = Profile.objects.filter(name=author_id)
         return {'followers': followers}
