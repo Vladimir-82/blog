@@ -259,7 +259,7 @@ def author_info(request, author_id):
     is_friend = author.username in current_users_friends_list
 
     return render(request, 'author.html', {"author_info": author,
-                                            "is_friend": is_friend
+                                            "is_friend": is_friend,
                                            })
 
 
@@ -270,3 +270,4 @@ def get_current_following(request) -> list:
     current_users_friends_list = \
         [user.name.username for user in current_users_friends]
     return current_users_friends_list
+
