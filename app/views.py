@@ -245,7 +245,9 @@ def author_info(request, author_id):
     if request.user.is_authenticated:
         if request.method == 'POST':
             if request.POST.get('_method') == 'add':
-                if author.username not in current_users_friends_list:
+
+                if Profile.objects.filter(friends=current_user).exists():
+
 
                     if author.username not in all_user_friend_list:
                         new_friend = Profile.objects.create(name=author)
@@ -258,6 +260,9 @@ def author_info(request, author_id):
 
     current_users_friends_list = get_current_following(request=request)
     is_friend = author.username in current_users_friends_list
+
+
+
 
     return render(request, 'author.html', {"author_info": author,
                                             "is_friend": is_friend,
