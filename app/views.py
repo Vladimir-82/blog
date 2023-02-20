@@ -246,6 +246,7 @@ def author_info(request, author_id):
         if request.method == 'POST':
             if request.POST.get('_method') == 'add':
                 if author.username not in current_users_friends_list:
+
                     if author.username not in all_user_friend_list:
                         new_friend = Profile.objects.create(name=author)
                     else:
