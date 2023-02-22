@@ -234,6 +234,7 @@ def author_info(request, author_id):
     """return following users"""
     current_user = request.user.id
     author = User.objects.get(id=author_id)
+    mail = request.user.email
 
     current_users_friends_list = get_current_following(request=request)
 
@@ -259,6 +260,7 @@ def author_info(request, author_id):
     is_friend = author.username in current_users_friends_list
 
     return render(request, 'author.html', {"author_info": author,
+                                           "mail": mail,
                                             "is_friend": is_friend,
                                            })
 

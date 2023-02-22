@@ -3,8 +3,7 @@
         <h4>Followers</h4>
         {% if followers %}
             {% for user in followers %}
-                {{ user.username }}
-
+                <a href="{% url 'author' user.pk %}" style="text-decoration: none">{{ user }}</a>
             {% endfor %}
         {% else %}
             No followers...
