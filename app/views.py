@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout
+from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView, CreateView, DeleteView, \
     UpdateView
@@ -230,6 +231,7 @@ class SearchResultsView(ListView):
         return result
 
 
+@login_required
 def author_info(request, author_id):
     """return following users"""
     current_user = request.user.id

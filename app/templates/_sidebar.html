@@ -6,17 +6,19 @@
         </div>
     </div>
 </div>
-<div class="media">
-    <div class="p-3 border bg-light">
-        <div class="container">
-            {% show_following %}
+{% if request.user.is_authenticated %}
+    <div class="media">
+        <div class="p-3 border bg-light">
+            <div class="container">
+                {% show_following %}
+            </div>
         </div>
     </div>
-</div>
-<div class="media">
-    <div class="p-3 border bg-light">
-        <div class="container">
-            {% show_followers %}
+    <div class="media">
+        <div class="p-3 border bg-light">
+            <div class="container">
+                {% show_followers %}
+            </div>
         </div>
     </div>
-</div>
+{% endif %}
