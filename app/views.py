@@ -238,25 +238,34 @@ def author_info(request, author_id):
     author = User.objects.get(id=author_id)
     mail = request.user.email
 
-    current_users_friends_list = get_current_following(request=request)
+    # current_users_friends_list = get_current_following(request=request)
 
-    all_user_friends = \
-        Profile.objects.prefetch_related('friends').all()
-    all_user_friend_list = \
-        [user.name.username for user in all_user_friends]
+
+    # all_user_friends = \
+    #     Profile.objects.prefetch_related('friends').all()
+    # all_user_friend_list = \
+    #     [user.name.username for user in all_user_friends]
 
     if request.user.is_authenticated:
         if request.method == 'POST':
             if request.POST.get('_method') == 'add':
-                if author.username not in current_users_friends_list:
-                    if author.username not in all_user_friend_list:
+
+                # if author.username not in current_users_friends_list:
+                if not Profile.objects.filter(friends=current_user,
+                                              name=author).exists():
+
+                    if not Profile.objects.filter(name=author).exists():
+                    # if author.username not in all_user_friend_list:
                         new_friend = Profile.objects.create(name=author)
+                        print('create!!!!!!!!!!!')
                     else:
                         new_friend = Profile.objects.get(name=author)
+                        print('get!!!!!!!!!!!')
                     new_friend.friends.add(current_user)
             else:
                 ex_friend = Profile.objects.get(name=author)
                 ex_friend.friends.remove(current_user)
+                print('remove!!!')
 
     current_users_friends_list = get_current_following(request=request)
     is_friend = author.username in current_users_friends_list
