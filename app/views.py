@@ -231,7 +231,7 @@ class SearchResultsView(ListView):
         return result
 
 
-@login_required
+@login_required(login_url='/login/')
 def author_info(request, author_id):
     """return following users"""
     current_user = request.user.id
