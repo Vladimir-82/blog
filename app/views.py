@@ -60,6 +60,7 @@ class CreateCategory(LoginRequiredMixin, CreateView):
     form_class = CategoryForm
     template_name = 'create_category.html'
     success_url = reverse_lazy('create')
+    login_url = '/login/'
 
     def form_valid(self, form):
         """Form validation"""
