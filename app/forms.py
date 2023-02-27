@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 
-from .models import Post, Comment
+from .models import Post, Comment, Category
 
 
 
@@ -79,4 +79,14 @@ class CommentForm(forms.ModelForm):
                                                   'style': 'width:50ch',
                                           }
                                    ),
+        }
+
+
+class CategoryForm(forms.ModelForm):
+    class Meta:
+        model = Category
+        fields = ['title', ]
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'form-control',
+                                            'style': 'width:50ch'}),
         }

@@ -11,7 +11,8 @@ from django.views.generic import ListView, DetailView, CreateView, DeleteView, \
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.edit import FormMixin
 from django.db.models import Q
-from .forms import UserRegisterForm, UserLoginForm, PostForm, CommentForm
+from .forms import UserRegisterForm, UserLoginForm, PostForm, \
+    CommentForm, CategoryForm
 from .utils import *
 from .models import Post, Comment, Profile
 import json
@@ -47,6 +48,18 @@ class CreatePost(LoginRequiredMixin, CreateView):
     template_name = 'create.html'
     success_url = reverse_lazy('main')
     login_url = '/login/'
+
+    def form_valid(self, form):
+        """Form validation"""
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
+
+class CreateCategory(LoginRequiredMixin, CreateView):
+    """Create new post"""
+    form_class = CategoryForm
+    template_name = 'create_category.html'
+    success_url = reverse_lazy('create')
 
     def form_valid(self, form):
         """Form validation"""
