@@ -1,8 +1,9 @@
+from datetime import datetime
+
 from django import template
 from django.db.models import Count
-from django.contrib.auth.models import User
 
-from app.models import Category, Profile, Post
+from app.models import Category, Profile
 
 
 register = template.Library()
@@ -31,3 +32,10 @@ def show_followers(context):
             user = Profile.objects.get(name=current_user)
             followers = user.friends.all()
             return {'followers': followers}
+
+
+@register.inclusion_tag('date.html')
+def show_date():
+    today = datetime.today()
+    weekday = today.weekday()
+    return {'today': today}
