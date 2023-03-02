@@ -250,7 +250,7 @@ def author_info(request, author_id):
     """return following users"""
     current_user = request.user.id
     author = User.objects.get(id=author_id)
-    mail = request.user.email
+    mail = author.email
     if request.user.is_authenticated:
         if request.method == 'POST':
             if request.POST.get('_method') == 'add':
