@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    "channels",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -39,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'fontawesomefree',
     'app',
+    'chat',
 ]
 
 MIDDLEWARE = [
@@ -76,6 +78,7 @@ CONTEXT_PROCESSORS = (
 )
 
 WSGI_APPLICATION = 'blog.wsgi.application'
+ASGI_APPLICATION = "blog.asgi.application"
 
 
 # Database
