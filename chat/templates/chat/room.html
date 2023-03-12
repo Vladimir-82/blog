@@ -5,6 +5,7 @@
     <input id="chat-message-input" type="text" size="100"><br>
     <input id="chat-message-submit" type="button" value="Send">
     {{ room_name|json_script:"room-name" }}
+    <input type="hidden" name="user" value="{{ user }}" id="user">
     <script>
         const roomName = JSON.parse(document.getElementById('room-name').textContent);
 
@@ -33,10 +34,11 @@
         };
 
         document.querySelector('#chat-message-submit').onclick = function(e) {
+            var username = $('#user').attr('value')
             const messageInputDom = document.querySelector('#chat-message-input');
             const message = messageInputDom.value;
             chatSocket.send(JSON.stringify({
-                'message': message
+                'message': username + ': ' + message
             }));
             messageInputDom.value = '';
         };
