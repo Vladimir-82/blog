@@ -1,4 +1,4 @@
-from datetime import datetime
+import time
 
 from django import template
 from django.db.models import Count
@@ -36,5 +36,5 @@ def show_followers(context):
 
 @register.inclusion_tag('date.html')
 def show_date():
-    today = datetime.today()
+    today = time.ctime()
     return {'today': today}
