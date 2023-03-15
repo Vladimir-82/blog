@@ -36,5 +36,5 @@ def show_followers(context):
 
 @register.inclusion_tag('date.html')
 def show_date():
-    today = time.ctime()
+    today = time.strftime('%d.%m.%Y %A %H:%M', time.localtime())
     return {'today': today}
