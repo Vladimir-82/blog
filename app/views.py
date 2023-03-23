@@ -274,7 +274,7 @@ def author_info(request, author_id):
                                             "is_friend": is_friend,
                                            })
 
-# @login_required(login_url='/login/')
+@login_required(login_url='/login/')
 def mail_send(request):
     if request.user.is_authenticated:
         if request.method == 'POST':
