@@ -284,7 +284,7 @@ def mail_send(request):
                     form.cleaned_data['subject'],
                     form.cleaned_data['content'],
                     'grun_gespenst@tut.by',
-                    ['asessor1982@gmail.com'],
+                    [request.user.email],
                     fail_silently=False
                 )
                 if mail:
