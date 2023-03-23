@@ -5,6 +5,20 @@ from django.contrib.auth.models import User
 from .models import Post, Comment, Category
 
 
+class ContactForm(forms.Form):
+    subject = forms.CharField(
+        label='subject',
+        widget=forms.TextInput(attrs={'class': 'form-control',
+                                      'style': 'width:50ch'
+                                      }))
+    content = forms.CharField(
+        label='content',
+        widget=forms.Textarea(attrs={'class': 'form-control',
+                                     'style': 'width:50ch',
+                                     'rows': 5
+                                      }))
+
+
 
 class UserLoginForm(AuthenticationForm):
     username = forms.CharField(

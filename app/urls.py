@@ -15,6 +15,7 @@ urlpatterns = [
     path('register/', register, name='register'),
     path('login/', user_login, name='login'),
     path('logout/', user_logout, name='logout'),
+    path('send/', mail_send, name='send'),
     path('like_post', like_post, name='like'),
     path('search', SearchResultsView.as_view(), name='search'),
     path('author/<int:author_id>/', author_info, name='author'),
