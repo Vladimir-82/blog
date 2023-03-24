@@ -173,3 +173,7 @@ EMAIL_HOST_USER = 'grun_gespenst@tut.by'
 EMAIL_HOST_PASSWORD = MAIL
 EMAIL_USE_TLS = False
 EMAIL_USE_SSL = True
+
+
+CAPTCHA_CHALLENGE_FUNCT = 'captcha.helpers.math_challenge'
+CAPTCHA_NOISE_FUNCTIONS = None
