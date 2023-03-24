@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
+from captcha.fields import CaptchaField
 
 from .models import Post, Comment, Category
 
@@ -17,7 +18,7 @@ class ContactForm(forms.Form):
                                      'style': 'width:50ch',
                                      'rows': 5
                                       }))
-
+    captcha = CaptchaField()
 
 
 class UserLoginForm(AuthenticationForm):
@@ -104,3 +105,5 @@ class CategoryForm(forms.ModelForm):
             'title': forms.TextInput(attrs={'class': 'form-control',
                                             'style': 'width:50ch'}),
         }
+
+

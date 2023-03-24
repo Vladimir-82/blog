@@ -285,13 +285,13 @@ def mail_send(request):
                     form.cleaned_data['content'],
                     'grun_gespenst@tut.by',
                     [request.user.email],
-                    fail_silently=False
+                    fail_silently=True
                 )
                 if mail:
                     messages.success(request, Message.email_sent)
                     return redirect('send')
                 else:
-                    messages.success(request, Message.email_error)
+                    messages.error(request, Message.email_error)
         else:
             form = ContactForm()
         return render(request, 'send.html', {"form": form})
