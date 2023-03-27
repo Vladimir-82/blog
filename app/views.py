@@ -12,10 +12,11 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.edit import FormMixin
 from django.db.models import Q
 from .forms import UserRegisterForm, UserLoginForm, PostForm, \
-    CommentForm, CategoryForm
+    CommentForm, CategoryForm, ContactForm
 from .utils import *
 from .models import Post, Comment, Profile
 import json
+from django.core.mail import send_mail
 
 
 class MainListView(ListView):
@@ -272,3 +273,25 @@ def author_info(request, author_id):
                                            "mail": mail,
                                             "is_friend": is_friend,
                                            })
+
+@login_required(login_url='/login/')
+def mail_send(request):
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            form = ContactForm(request.POST)
+            if form.is_valid():
+                mail = send_mail(
+                    form.cleaned_data['subject'],
+                    form.cleaned_data['content'],
+                    'grun_gespenst@tut.by',
+                    [request.user.email],
+                    fail_silently=True
+                )
+                if mail:
+                    messages.success(request, Message.email_sent)
+                    return redirect('send')
+                else:
+                    messages.error(request, Message.email_error)
+        else:
+            form = ContactForm()
+        return render(request, 'send.html', {"form": form})
