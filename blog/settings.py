@@ -44,7 +44,6 @@ INSTALLED_APPS = [
     'app',
     'chat',
     'captcha',
-    'social_django',
 ]
 
 MIDDLEWARE = [
@@ -178,9 +177,3 @@ EMAIL_USE_SSL = True
 
 CAPTCHA_CHALLENGE_FUNCT = 'captcha.helpers.math_challenge'
 CAPTCHA_NOISE_FUNCTIONS = None
-
-
-AUTHENTICATION_BACKENDS = (
-    'social_core.backends.google.GoogleOAuth2',
-    'django.contrib.auth.backends.ModelBackend',
-)
