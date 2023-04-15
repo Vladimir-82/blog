@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-apf(6swfq-ygk!tn1$h8bir%6jqxjder449p(cqi$$=o^f()az
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost',]
 
 
 # Application definition
@@ -45,6 +45,12 @@ INSTALLED_APPS = [
     'app',
     'chat',
     'captcha',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+    # 'allauth.socialaccount.providers.github',
+    # 'allauth.socialaccount.providers.facebook',
 ]
 
 MIDDLEWARE = [
@@ -179,8 +185,30 @@ EMAIL_USE_SSL = True
 CAPTCHA_CHALLENGE_FUNCT = 'captcha.helpers.math_challenge'
 CAPTCHA_NOISE_FUNCTIONS = None
 
+SITE_ID = 1
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
+
+
+# google
+# Client ID 825629354117-oktr9jfh73dp1hgt8k5a6ccbjbbktc7v.apps.googleusercontent.com
+# Client secret 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
+
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        },
+        'OAUTH_PKCE_ENABLED': True,
+    }
+}
+
+LOGIN_REDIRECT_URL = 'main'
