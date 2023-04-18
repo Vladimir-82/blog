@@ -1,4 +1,8 @@
 {% extends "basic.html" %}
+
+{% load i18n %}
+{% load account socialaccount %}
+
 {% block title %}Login{% endblock %}
 {% block content %}
 <div class="inner">
@@ -8,4 +12,11 @@
         <button type="submit" class="btn btn-primary btn-block">Authorization</button>
     </form>
 </div>
+{% get_providers as socialaccount_providers %}
+{% if socialaccount_providers %}
+<div>
+    {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+</div>
+
+{% endif %}
 {% endblock %}
